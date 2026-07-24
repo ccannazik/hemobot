@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("user") // user | admin
+  suspended Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  forumPosts    ForumPost[]
+  forumComments ForumComment[]
+  journalEntries JournalEntry[]
+  reports       Report[]
+}
+
+model ForumPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  category    String
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  likes       Int      @default(0)
+  hidden      Boolean  @default(false)
+  removed     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  comments ForumComment[]
+  reports  Report[]
+}
+
+model ForumComment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  post      ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  likes     Int      @default(0)
+  hidden    Boolean  @default(false)
+  removed   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  reason    String
+  status    String   @default("pending") // pending | reviewed | dismissed
+  reporterId String
+  reporter  User     @relation(fields: [reporterId], references: [id])
+  postId    String?
+  post      ForumPost? @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model JournalEntry {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  date            DateTime
+  notes           String?
+  questionsForDoctor String?
+  symptomsNotes   String?
+  appointmentNotes String?
+  treatmentNotes  String?
+  emotionalNotes  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ChatConversation {
+  id        String   @id @default(cuid())
+  sessionId String
+  role      String   // user | assistant
+  content   String
+  category  String?
+  createdAt DateTime @default(now())
+}
+
+model KnowledgeArticle {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  summary     String
+  content     String
+  source      String
+  sourceUrl   String
+  category    String
+  updatedAt   DateTime @updatedAt
+}

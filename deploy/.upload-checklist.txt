@@ -1,0 +1,25 @@
+# Upload these via FileZilla
+src/
+public/
+prisma/
+scripts/
+.next/
+server.js
+package.json
+package-lock.json
+next.config.ts
+tsconfig.json
+postcss.config.mjs
+eslint.config.mjs
+
+# Do NOT upload (create on server instead)
+.env
+node_modules/
+.git/
+
+# Create .env on server with:
+# GEMINI_API_KEY=...
+# GOOGLE_MAPS_API_KEY=...
+# DATABASE_URL="file:./prisma/prod.db"
+# SESSION_SECRET=random-long-secret
+# NODE_ENV=production
