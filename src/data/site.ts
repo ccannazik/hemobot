@@ -5,7 +5,7 @@ export const SITE = {
   nonprofitName: "HemoBot",
   description:
     "An educational and community platform helping families navigate life after a hemophilia diagnosis.",
-  email: "hemobotinfo@gmail.com",
+  email: "hemobot@gmail.com",
   phone: null as string | null,
   phoneNote: "Coming soon",
   officeHours: "Monday – Friday, 9:00 AM – 5:00 PM PT",
@@ -130,7 +130,7 @@ export const CONTACT_FAQ = [
   },
   {
     q: "How can I reach the team?",
-    a: "Email us at hemobotinfo@gmail.com. We aim to respond within a few business days.",
+    a: "Email us at hemobot@gmail.com or use the contact form on this page.",
   },
   {
     q: "Can I suggest a treatment center for the directory?",

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, Clock, Send } from "lucide-react";
+import { Mail, Phone, Clock, Send, Loader2 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { EmergencyNotice, PageDisclaimer } from "@/components/Disclaimer";
@@ -10,11 +10,33 @@ import { CONTACT_FAQ, SITE } from "@/data/site";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -58,10 +80,10 @@ export default function ContactPage() {
           {submitted ? (
             <Card className="text-center py-12 bg-teal-50">
               <Send className="h-10 w-10 text-teal-600 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold">Message received</h2>
+              <h2 className="text-xl font-semibold">Message sent</h2>
               <p className="mt-2 text-slate-600 text-sm">
-                We&apos;ll get back to you by email. For medical questions, contact your
-                Hemophilia Treatment Center.
+                Your message was emailed to our team. We&apos;ll get back to you soon. For medical
+                questions, contact your Hemophilia Treatment Center.
               </p>
             </Card>
           ) : (
@@ -102,7 +124,20 @@ export default function ContactPage() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm"
                 />
-                <Button type="submit">Send Message</Button>
+
+                {error && (
+                  <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
+                )}
+
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </Button>
               </form>
             </Card>
           )}
