@@ -3,26 +3,42 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { AuthProvider } from "@/components/AuthProvider";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { SITE } from "@/data/site";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: {
-    default: "HEMOBOT — Find Hemophilia Care Near You",
-    template: "%s | HEMOBOT",
+    default: `${SITE.fullName} — Hemophilia Support Platform`,
+    template: `%s | ${SITE.name}`,
   },
-  description:
-    "Reliable hemophilia information, nearby specialized care, and a supportive community for patients and families in Palo Alto and beyond.",
-  keywords: ["hemophilia", "HTC", "bleeding disorders", "Palo Alto", "hematology"],
+  description: SITE.description,
+  keywords: [
+    "hemophilia",
+    "newly diagnosed",
+    "HTC",
+    "HemoBot",
+    "bleeding disorders",
+    "patient support",
+  ],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <ScrollToTop />
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

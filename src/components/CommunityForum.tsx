@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Heart, MessageCircle, Flag, Search, Plus, X } from "lucide-react";
+import Link from "next/link";
+import { Loader2, Lock, ArrowUp, MessageCircle, Headphones } from "lucide-react";
 import { Button } from "./Button";
 import { Card } from "./Card";
 import { ForumDisclaimer } from "./Disclaimer";
-import { forumCategories } from "@/data/knowledge";
+import { useAuth } from "./AuthProvider";
+import { COMMUNITY_CATEGORIES } from "@/data/site";
+import { useEffect, useState } from "react";
 
 interface Post {
   id: string;
@@ -25,7 +27,37 @@ interface Comment {
   createdAt: string;
 }
 
-export function CommunityForum() {
+export function CommunityGate() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Card className="text-center py-12">
+        <Lock className="h-12 w-12 text-primary-400 mx-auto mb-4" />
+        <h2 className="text-xl font-semibold text-slate-900">Sign in to join the conversation</h2>
+        <p className="mt-3 text-slate-600 max-w-md mx-auto">
+          Our community is a moderated space for families and individuals affected by hemophilia.
+          Create a free account to read posts, upvote, and share your experience.
+        </p>
+        <Link href="/login?redirect=/community" className="inline-block mt-6">
+          <Button size="lg">Create Free Account</Button>
+        </Link>
+      </Card>
+    );
+  }
+
+  return <CommunityForum />;
+}
+
+function CommunityForum() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
@@ -36,9 +68,9 @@ export function CommunityForum() {
   const [form, setForm] = useState({
     title: "",
     content: "",
-    category: forumCategories[0],
-    authorName: "",
+    category: COMMUNITY_CATEGORIES[0],
   });
+  const { user } = useAuth();
 
   async function loadPosts() {
     const params = new URLSearchParams();
@@ -60,11 +92,11 @@ export function CommunityForum() {
       body: JSON.stringify(form),
     });
     setShowCreate(false);
-    setForm({ title: "", content: "", category: forumCategories[0], authorName: "" });
+    setForm({ title: "", content: "", category: COMMUNITY_CATEGORIES[0] });
     loadPosts();
   }
 
-  async function likePost(id: string) {
+  async function upvotePost(id: string) {
     await fetch(`/api/forum/${id}`, { method: "POST" });
     loadPosts();
   }
@@ -98,49 +130,49 @@ export function CommunityForum() {
     setNewComment("");
     const res = await fetch(`/api/forum/comments?postId=${selectedPost.id}`);
     setComments(await res.json());
+    loadPosts();
   }
 
   return (
     <div className="space-y-6">
       <ForumDisclaimer />
 
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <input
-            type="search"
-            placeholder="Search posts…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm"
-          />
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <p className="text-sm text-slate-600">
+          Welcome back, <strong>{user?.name}</strong>
+        </p>
+        <div className="flex gap-2 text-sm">
+          <Link href="/podcast" className="text-primary-600 hover:underline flex items-center gap-1">
+            <Headphones className="h-4 w-4" /> Patient Stories Podcast
+          </Link>
+          <Link href="/assistant" className="text-primary-600 hover:underline flex items-center gap-1">
+            <MessageCircle className="h-4 w-4" /> Ask HemoBot AI
+          </Link>
         </div>
-        <Button onClick={() => setShowCreate(true)}>
-          <Plus className="h-4 w-4" />
-          New Post
-        </Button>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <input
+          type="search"
+          placeholder="Search discussions…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full sm:max-w-md rounded-xl border border-slate-200 py-2.5 px-4 text-sm"
+        />
+        <Button onClick={() => setShowCreate(true)}>New Post</Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => setCategory("all")}
-          className={`rounded-full px-3 py-1 text-xs font-medium ${
-            category === "all" ? "bg-primary-600 text-white" : "bg-slate-100 text-slate-600"
-          }`}
-        >
-          All
-        </button>
-        {forumCategories.map((cat) => (
+        {["all", ...COMMUNITY_CATEGORIES].map((cat) => (
           <button
             key={cat}
             type="button"
             onClick={() => setCategory(cat)}
-            className={`rounded-full px-3 py-1 text-xs font-medium ${
-              category === cat ? "bg-primary-600 text-white" : "bg-slate-100 text-slate-600"
+            className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              category === cat ? "bg-primary-600 text-white" : "bg-white border border-slate-200 text-slate-600 hover:border-primary-300"
             }`}
           >
-            {cat}
+            {cat === "all" ? "All" : cat}
           </button>
         ))}
       </div>
@@ -148,14 +180,7 @@ export function CommunityForum() {
       {showCreate && (
         <Card>
           <form onSubmit={createPost} className="space-y-4">
-            <h3 className="font-semibold text-lg">Create a Post</h3>
-            <input
-              type="text"
-              placeholder="Your name (optional)"
-              value={form.authorName}
-              onChange={(e) => setForm({ ...form, authorName: e.target.value })}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
-            />
+            <h3 className="font-semibold text-lg">Start a Discussion</h3>
             <input
               type="text"
               placeholder="Post title"
@@ -169,10 +194,8 @@ export function CommunityForum() {
               onChange={(e) => setForm({ ...form, category: e.target.value })}
               className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
             >
-              {forumCategories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
+              {COMMUNITY_CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
             <textarea
@@ -185,9 +208,7 @@ export function CommunityForum() {
             />
             <div className="flex gap-2">
               <Button type="submit">Post</Button>
-              <Button type="button" variant="ghost" onClick={() => setShowCreate(false)}>
-                Cancel
-              </Button>
+              <Button type="button" variant="ghost" onClick={() => setShowCreate(false)}>Cancel</Button>
             </div>
           </form>
         </Card>
@@ -195,28 +216,26 @@ export function CommunityForum() {
 
       {selectedPost ? (
         <Card>
-          <button
-            type="button"
-            onClick={() => setSelectedPost(null)}
-            className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-4"
-          >
-            <X className="h-4 w-4" /> Back to posts
+          <button type="button" onClick={() => setSelectedPost(null)} className="text-sm text-slate-500 hover:text-slate-700 mb-4">
+            ← Back to feed
           </button>
-          <span className="text-xs font-medium text-primary-600">{selectedPost.category}</span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-primary-600">{selectedPost.category}</span>
           <h2 className="text-xl font-bold mt-1">{selectedPost.title}</h2>
           <p className="text-sm text-slate-500 mt-1">
-            by {selectedPost.author.name || "Community Member"} ·{" "}
-            {new Date(selectedPost.createdAt).toLocaleDateString()}
+            u/{selectedPost.author.name || "member"} · {new Date(selectedPost.createdAt).toLocaleDateString()}
           </p>
-          <p className="mt-4 text-slate-700 leading-relaxed whitespace-pre-wrap">
-            {selectedPost.content}
-          </p>
+          <p className="mt-4 text-slate-700 leading-relaxed whitespace-pre-wrap">{selectedPost.content}</p>
+
+          <div className="mt-4 flex gap-4 text-sm">
+            <Link href="/treatments" className="text-primary-600 hover:underline">Related: Treatment Overview →</Link>
+            <Link href="/podcast" className="text-primary-600 hover:underline">Listen: Patient Stories →</Link>
+          </div>
 
           <div className="mt-6 border-t border-slate-200 pt-6">
-            <h3 className="font-semibold mb-4">Comments ({comments.length})</h3>
+            <h3 className="font-semibold mb-4">{comments.length} Comments</h3>
             <div className="space-y-3 mb-4">
               {comments.map((c) => (
-                <div key={c.id} className="rounded-lg bg-slate-50 p-3 text-sm">
+                <div key={c.id} className="rounded-lg bg-slate-50 p-3 text-sm border-l-2 border-primary-200">
                   <p className="font-medium text-slate-700">{c.author.name || "Member"}</p>
                   <p className="text-slate-600 mt-1">{c.content}</p>
                 </div>
@@ -225,7 +244,7 @@ export function CommunityForum() {
             <form onSubmit={submitComment} className="flex gap-2">
               <input
                 type="text"
-                placeholder="Write a reply…"
+                placeholder="Add a comment…"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm"
@@ -235,56 +254,50 @@ export function CommunityForum() {
           </div>
         </Card>
       ) : (
-        <div className="space-y-4">
-          {posts.length === 0 && (
-            <p className="text-center text-slate-500 py-12">
-              No posts yet. Be the first to share!
-            </p>
-          )}
+        <div className="space-y-3">
           {posts.map((post) => (
-            <Card key={post.id} hover>
-              <div
-                role="button"
-                tabIndex={0}
-                className="cursor-pointer text-left w-full"
-                onClick={() => openPost(post)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    openPost(post);
-                  }
-                }}
-              >
-                <span className="text-xs font-medium text-primary-600">{post.category}</span>
-                <h3 className="font-semibold text-slate-900 mt-1">{post.title}</h3>
-                <p className="text-sm text-slate-600 mt-2 line-clamp-2">{post.content}</p>
-                <p className="text-xs text-slate-400 mt-2">
-                  {post.author.name || "Community Member"} ·{" "}
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => likePost(post.id)}
-                  className="flex items-center gap-1 text-sm text-slate-500 hover:text-red-500"
-                >
-                  <Heart className="h-4 w-4" /> {post.likes}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => openPost(post)}
-                  className="flex items-center gap-1 text-sm text-slate-500 hover:text-primary-600"
-                >
-                  <MessageCircle className="h-4 w-4" /> {post._count.comments}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => reportPost(post.id)}
-                  className="flex items-center gap-1 text-sm text-slate-400 hover:text-amber-600 ml-auto"
-                >
-                  <Flag className="h-4 w-4" /> Report
-                </button>
+            <Card key={post.id} hover className="!p-0 overflow-hidden">
+              <div className="flex">
+                <div className="flex flex-col items-center gap-1 bg-slate-50 px-3 py-4 border-r border-slate-100 min-w-[52px]">
+                  <button
+                    type="button"
+                    onClick={() => upvotePost(post.id)}
+                    className="text-slate-400 hover:text-primary-600 transition-colors"
+                    aria-label="Upvote"
+                  >
+                    <ArrowUp className="h-5 w-5" />
+                  </button>
+                  <span className="text-sm font-bold text-slate-700">{post.likes}</span>
+                </div>
+                <div className="flex-1 p-4">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    className="cursor-pointer text-left w-full"
+                    onClick={() => openPost(post)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        openPost(post);
+                      }
+                    }}
+                  >
+                    <span className="text-xs font-semibold text-primary-600">{post.category}</span>
+                    <h3 className="font-semibold text-slate-900 mt-0.5 hover:text-primary-700">{post.title}</h3>
+                    <p className="text-sm text-slate-600 mt-1 line-clamp-2">{post.content}</p>
+                    <p className="text-xs text-slate-400 mt-2">
+                      Posted by {post.author.name || "Community Member"} · {new Date(post.createdAt).toLocaleDateString()} · {post._count.comments} comments
+                    </p>
+                  </div>
+                  <div className="flex gap-3 mt-3 pt-2 border-t border-slate-100">
+                    <button type="button" onClick={() => openPost(post)} className="text-xs text-slate-500 hover:text-primary-600 flex items-center gap-1">
+                      <MessageCircle className="h-3.5 w-3.5" /> Comment
+                    </button>
+                    <button type="button" onClick={() => reportPost(post.id)} className="text-xs text-slate-400 hover:text-amber-600 ml-auto">
+                      Report
+                    </button>
+                  </div>
+                </div>
               </div>
             </Card>
           ))}

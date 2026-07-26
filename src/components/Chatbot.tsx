@@ -28,7 +28,7 @@ export function Chatbot({ compact = false }: ChatbotProps) {
     {
       role: "assistant",
       content:
-        "Hello! I'm the Hemophilia Assistant. I can answer general educational questions about hemophilia, help you understand treatment concepts, and guide you to nearby care resources. How can I help you today?",
+        "Hello! I'm HemoBot AI. I explain hemophilia in plain language, answer beginner questions, help you understand treatment concepts, and guide you to the right pages on this site. I do not replace your doctor or Hemophilia Treatment Center. How can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -36,9 +36,14 @@ export function Chatbot({ compact = false }: ChatbotProps) {
   const sessionIdRef = useRef(createSessionId());
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const skipInitialScroll = useRef(true);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (skipInitialScroll.current) {
+      skipInitialScroll.current = false;
+      return;
+    }
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages]);
 
   const categories = [...new Set(quickQuestions.map((q) => q.category))];
@@ -209,7 +214,7 @@ export function Chatbot({ compact = false }: ChatbotProps) {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask a general question about hemophilia…"
+          placeholder="Ask HemoBot AI a general question…"
           className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
           disabled={loading}
           aria-label="Chat message"

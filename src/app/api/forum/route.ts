@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/session";
 
 export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get("category");
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
       author: { select: { name: true, email: true } },
       _count: { select: { comments: true } },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ likes: "desc" }, { createdAt: "desc" }],
   });
 
   return NextResponse.json(posts);
@@ -31,23 +32,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { title, content, category, authorName, authorEmail } = await request.json();
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Sign in to create posts" }, { status: 401 });
+    }
+
+    const { title, content, category } = await request.json();
 
     if (!title || !content || !category) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    let user = await prisma.user.findUnique({
-      where: { email: authorEmail || "anonymous@hemobot.local" },
-    });
-
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          email: authorEmail || `guest-${Date.now()}@hemobot.local`,
-          name: authorName || "Community Member",
-        },
-      });
     }
 
     const post = await prisma.forumPost.create({

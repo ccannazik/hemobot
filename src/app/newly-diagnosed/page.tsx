@@ -8,9 +8,10 @@ import {
   HelpCircle,
   ArrowRight,
   CheckCircle2,
+  Headphones,
 } from "lucide-react";
 import { Card } from "@/components/Card";
-import { Disclaimer } from "@/components/Disclaimer";
+import { PageDisclaimer } from "@/components/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Newly Diagnosed?",
@@ -43,34 +44,43 @@ const steps = [
       "Locate an official HTC near Palo Alto for comprehensive, specialized bleeding disorder care.",
     href: "/find-care",
     icon: MapPin,
-    cta: "Find Care Near Me",
+    cta: "Hospital Directory",
   },
   {
     number: 4,
-    title: "Prepare Questions for Your Healthcare Team",
+    title: "Ask HemoBot AI",
     description:
-      "Use our journal to write down questions before your first hematology appointment.",
-    href: "/journal",
+      "Get calm answers to beginner questions and learn which resources on this site to visit next.",
+    href: "/assistant",
     icon: MessageCircle,
-    cta: "Open My Journal",
+    cta: "Talk with HemoBot AI",
   },
   {
     number: 5,
-    title: "Find Community Support",
+    title: "Understand Treatment Options",
+    description:
+      "Educational overview of factor replacement, prophylaxis, and newer options — to discuss with your HTC.",
+    href: "/treatments",
+    icon: HelpCircle,
+    cta: "Treatment Overview",
+  },
+  {
+    number: 6,
+    title: "Join the Community",
     description:
       "Connect with other parents and patients who understand what you're going through.",
     href: "/community",
     icon: Users,
-    cta: "Join the Community",
+    cta: "Join Community",
   },
   {
-    number: 6,
-    title: "Explore Trusted Resources",
+    number: 7,
+    title: "Listen to Patient Stories",
     description:
-      "Access official government resources, CDC information, and reputable educational materials.",
-    href: "/resources",
-    icon: BookOpen,
-    cta: "View Resources",
+      "Hear real experiences from families on the HemoBot podcast.",
+    href: "/podcast",
+    icon: Headphones,
+    cta: "Listen to Podcast",
   },
 ];
 
@@ -88,11 +98,7 @@ export default function NewlyDiagnosedPage() {
         </p>
       </div>
 
-      <Disclaimer variant="info" className="mt-8">
-        This pathway provides general educational guidance only. It does not replace care from a
-        qualified healthcare professional or Hemophilia Treatment Center. Every person&apos;s journey
-        is unique.
-      </Disclaimer>
+      <PageDisclaimer />
 
       <div className="mt-12 space-y-6">
         {steps.map((step) => (
@@ -124,13 +130,13 @@ export default function NewlyDiagnosedPage() {
       <div className="mt-12 text-center rounded-2xl bg-gradient-to-br from-primary-50 to-teal-50 p-8 border border-primary-100">
         <h2 className="text-xl font-bold text-slate-900">Have a question right now?</h2>
         <p className="mt-2 text-slate-600">
-          Our Hemophilia Assistant can answer general educational questions anytime.
+          HemoBot AI can answer general educational questions anytime — it does not replace your doctor.
         </p>
         <Link
           href="/assistant"
           className="inline-flex items-center gap-2 mt-4 rounded-xl bg-primary-600 px-6 py-3 text-white font-semibold hover:bg-primary-700"
         >
-          Ask the Assistant
+          Talk with HemoBot AI
         </Link>
       </div>
     </div>

@@ -57,7 +57,7 @@ export default function ResourcesPage() {
 
       <div className="mt-12 rounded-2xl bg-primary-50 border border-primary-200 p-6">
         <p className="text-sm text-primary-900">
-          HEMOBOT does not provide eligibility determinations for government programs. Visit the
+          HemoBot does not provide eligibility determinations for government programs. Visit the
           official websites linked above for current requirements and application processes.
         </p>
       </div>

@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
         error:
           detail.toLowerCase().includes("quota") || detail.toLowerCase().includes("limit: 0")
             ? "Gemini API quota is exhausted for this key. Check billing and usage at https://ai.dev/rate-limit, then try again."
-            : "The Hemophilia Assistant could not reach Gemini right now. Please try again in a moment.",
+            : "HemoBot AI could not reach Gemini right now. Please try again in a moment.",
         detail: process.env.NODE_ENV === "development" ? detail : undefined,
       },
       { status: 502 }

@@ -246,13 +246,10 @@ export const quickQuestions: QuickQuestion[] = [
 
 export const forumCategories = [
   "Newly Diagnosed",
-  "Parenting and Caregiving",
-  "School and Education",
-  "Living with Hemophilia",
-  "Treatment Experiences",
-  "Travel",
-  "Emotional Support",
-  "Research and Clinical Trials",
-  "Advocacy",
-  "General Discussion",
+  "Parents & Caregivers",
+  "Adults with Hemophilia",
+  "Treatment Questions",
+  "School & Sports",
+  "Success Stories",
+  "Questions for Community",
 ];

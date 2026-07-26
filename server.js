@@ -26,6 +26,6 @@ app.prepare().then(() => {
       res.end("Internal Server Error");
     }
   }).listen(port, hostname, () => {
-    console.log(`HEMOBOT ready on port ${port} (${dev ? "development" : "production"})`);
+    console.log(`HemoBot ready on port ${port} (${dev ? "development" : "production"})`);
   });
 });

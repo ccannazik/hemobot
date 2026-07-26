@@ -2,9 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Users, MessageCircle } from "lucide-react";
 import { CareMap } from "@/components/CareMap";
 import { LocationSearch } from "@/components/LocationSearch";
-import { MedicalDisclaimerBanner } from "@/components/Disclaimer";
+import { PageDisclaimer } from "@/components/Disclaimer";
+import { Card } from "@/components/Card";
 import { PALO_ALTO_CENTER, type FacilityFilter, type HealthcareFacility } from "@/data/facilities";
 
 export default function FindCareContent() {
@@ -51,12 +54,20 @@ export default function FindCareContent() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="max-w-3xl">
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">
-          Find Nearby Hemophilia Care
+          Hospital Directory
         </h1>
         <p className="mt-4 text-slate-600 leading-relaxed">
-          Search for hospitals, official Hemophilia Treatment Centers, hematologists, and pediatric
-          hematology clinics. Currently focused on Palo Alto and the surrounding Bay Area.
+          Find Hemophilia Treatment Centers, hematologists, and pediatric specialists near you.
+          Many families visit us immediately after diagnosis — your HTC can help coordinate comprehensive care.
         </p>
+        <div className="mt-4 flex flex-wrap gap-3 text-sm">
+          <Link href="/community" className="text-primary-600 hover:underline inline-flex items-center gap-1">
+            <Users className="h-4 w-4" /> Find local community groups
+          </Link>
+          <Link href="/assistant" className="text-primary-600 hover:underline inline-flex items-center gap-1">
+            <MessageCircle className="h-4 w-4" /> Ask HemoBot AI about HTCs
+          </Link>
+        </div>
       </div>
 
       <div className="mt-8">
@@ -67,7 +78,7 @@ export default function FindCareContent() {
       </div>
 
       <div className="mt-6">
-        <MedicalDisclaimerBanner />
+        <PageDisclaimer />
       </div>
 
       <div className="mt-8">
@@ -83,7 +94,7 @@ export default function FindCareContent() {
         />
       </div>
 
-      <div className="mt-10 rounded-2xl bg-slate-50 border border-slate-200 p-6">
+      <Card className="mt-10">
         <h2 className="font-semibold text-slate-900">About Our Directory Data</h2>
         <p className="mt-2 text-sm text-slate-600 leading-relaxed">
           Facility information is sourced from the{" "}
@@ -96,10 +107,11 @@ export default function FindCareContent() {
             CDC Hemophilia Treatment Center Directory
           </a>{" "}
           and official facility websites. Official HTCs are clearly marked. Always verify current
-          hours, contact information, and services before visiting. HEMOBOT is designed to expand
-          to additional regions over time.
+          hours, contact information, and services before visiting. After finding a center, consider{" "}
+          <Link href="/community" className="text-primary-600 hover:underline">joining our community</Link>{" "}
+          to connect with other local families.
         </p>
-      </div>
+      </Card>
     </div>
   );
 }

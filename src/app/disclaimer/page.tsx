@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MedicalDisclaimerBanner } from "@/components/Disclaimer";
+import { SITE } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Medical Disclaimer",
@@ -11,24 +12,25 @@ export default function DisclaimerPage() {
       <h1 className="text-3xl font-bold text-slate-900">Medical Disclaimer</h1>
 
       <div className="mt-8 space-y-6">
-        <MedicalDisclaimerBanner />
+        <MedicalDisclaimerBanner prominent />
 
         <div className="space-y-4 text-slate-700 leading-relaxed text-sm">
           <p>
-            HEMOBOT is an educational information and community support platform. It is{" "}
+            {SITE.fullName} is an educational information and community support platform. It is{" "}
             <strong>not</strong> a medical device, diagnostic tool, or emergency triage system.
           </p>
 
-          <h2 className="text-lg font-semibold text-slate-900 pt-4">What HEMOBOT Provides</h2>
+          <h2 className="text-lg font-semibold text-slate-900 pt-4">What HemoBot Provides</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>General educational information about hemophilia</li>
             <li>A directory of healthcare facilities and Hemophilia Treatment Centers</li>
             <li>Peer community support through moderated forums</li>
-            <li>Private personal journaling tools</li>
+            <li>HemoBot AI for educational questions and website navigation</li>
+            <li>Patient stories podcast and treatment overviews</li>
             <li>Links to official government and medical organization resources</li>
           </ul>
 
-          <h2 className="text-lg font-semibold text-slate-900 pt-4">What HEMOBOT Does Not Provide</h2>
+          <h2 className="text-lg font-semibold text-slate-900 pt-4">What HemoBot Does Not Provide</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>Medical diagnosis of any condition</li>
             <li>Individualized medical advice or treatment recommendations</li>
@@ -41,7 +43,7 @@ export default function DisclaimerPage() {
           <p>
             If you or someone else is experiencing a medical emergency — including severe or
             uncontrolled bleeding — call <strong>911</strong> immediately or go to the nearest
-            emergency department. Do not rely on HEMOBOT or its chatbot for emergency decisions.
+            emergency department. Do not rely on HemoBot or HemoBot AI for emergency decisions.
           </p>
 
           <h2 className="text-lg font-semibold text-slate-900 pt-4">Community Content</h2>
@@ -53,9 +55,9 @@ export default function DisclaimerPage() {
 
           <h2 className="text-lg font-semibold text-slate-900 pt-4">Healthcare Directory</h2>
           <p>
-            Facility information is sourced from public directories and official websites. HEMOBOT
-            makes no guarantees about the accuracy, availability, or quality of listed providers.
-            Always verify current contact information and services directly with the facility.
+            Facility information is sourced from public directories and official websites. HemoBot
+            makes no guarantees about the accuracy, availability, or quality of listed
+            providers. Always verify current contact information and services directly with the facility.
           </p>
         </div>
       </div>

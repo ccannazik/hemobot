@@ -116,6 +116,6 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Nil Canozkan",
     role: "Design & Accessibility",
-    bio: "Ensures HEMOBOT is welcoming, accessible, and easy to use for patients of all ages and caregivers.",
+    bio: "Ensures HemoBot is welcoming, accessible, and easy to use for patients of all ages and caregivers.",
   },
 ];

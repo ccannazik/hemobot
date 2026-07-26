@@ -62,7 +62,7 @@ export default function PrivacyPage() {
         </section>
 
         <Disclaimer variant="info" className="mt-8">
-          For questions about this privacy policy, contact the HEMOBOT team through our community
+          For questions about this privacy policy, contact the HemoBot team through our{" "}
           forum or official channels.
         </Disclaimer>
       </div>

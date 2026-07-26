@@ -1,17 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Droplets } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { SITE } from "@/data/site";
 
-export function Logo({ className = "" }: { className?: string }) {
+const LOGO_SRC = "/hemobot-logo.png";
+
+type LogoSize = "header" | "footer" | "hero" | "auth";
+
+const sizeClasses: Record<LogoSize, string> = {
+  header: "h-10 sm:h-11 w-auto",
+  footer: "h-16 w-auto",
+  hero: "h-32 sm:h-40 w-auto",
+  auth: "h-24 w-auto mx-auto",
+};
+
+interface LogoProps {
+  className?: string;
+  size?: LogoSize;
+  showName?: boolean;
+}
+
+export function Logo({ className = "", size = "header", showName = true }: LogoProps) {
   const pathname = usePathname();
   const router = useRouter();
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
     if (pathname === "/") {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
     e.preventDefault();
@@ -22,18 +41,36 @@ export function Logo({ className = "" }: { className?: string }) {
     <Link
       href="/"
       onClick={handleClick}
-      aria-label="HEMOBOT home"
-      className={`flex items-center gap-2 group ${className}`}
+      aria-label={`${SITE.name} home`}
+      className={cn("inline-flex items-center gap-2.5 group", className)}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-teal-600 text-white shadow-md group-hover:shadow-lg transition-shadow">
-        <Droplets className="h-5 w-5" aria-hidden="true" />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-xl font-bold tracking-tight text-primary-800">HEMOBOT</span>
-        <span className="text-[10px] uppercase tracking-widest text-slate-500 -mt-1">
-          Hemophilia Care Platform
+      <Image
+        src={LOGO_SRC}
+        alt=""
+        width={768}
+        height={866}
+        priority={size === "header"}
+        aria-hidden
+        className={cn(sizeClasses[size], "object-contain object-left")}
+      />
+      {showName && (
+        <span
+          className={cn(
+            "font-bold tracking-tight text-primary-800 leading-none",
+            size === "header" ? "text-lg sm:text-xl" : "text-xl"
+          )}
+        >
+          {SITE.name}
         </span>
-      </div>
+      )}
     </Link>
+  );
+}
+
+export function LogoMark({ className = "" }: { className?: string }) {
+  return (
+    <div className={cn("flex flex-col items-center sm:items-start gap-2", className)}>
+      <Logo size="hero" showName className="pointer-events-none" />
+    </div>
   );
 }

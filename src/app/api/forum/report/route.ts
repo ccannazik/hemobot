@@ -1,32 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
   try {
-    const { reason, postId, commentId, reporterEmail } = await request.json();
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Sign in to report content" }, { status: 401 });
+    }
+
+    const { reason, postId } = await request.json();
 
     if (!reason) {
       return NextResponse.json({ error: "Reason required" }, { status: 400 });
-    }
-
-    let reporter = await prisma.user.findUnique({
-      where: { email: reporterEmail || "reporter@hemobot.local" },
-    });
-
-    if (!reporter) {
-      reporter = await prisma.user.create({
-        data: {
-          email: reporterEmail || `reporter-${Date.now()}@hemobot.local`,
-          name: "Reporter",
-        },
-      });
     }
 
     const report = await prisma.report.create({
       data: {
         reason,
         postId: postId || null,
-        reporterId: reporter.id,
+        reporterId: user.id,
       },
     });
 

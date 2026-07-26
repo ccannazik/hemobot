@@ -1,25 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
   try {
-    const { postId, content, authorName, authorEmail } = await request.json();
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Sign in to comment" }, { status: 401 });
+    }
+
+    const { postId, content } = await request.json();
 
     if (!postId || !content) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    let user = await prisma.user.findUnique({
-      where: { email: authorEmail || "anonymous@hemobot.local" },
-    });
-
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          email: authorEmail || `guest-${Date.now()}@hemobot.local`,
-          name: authorName || "Community Member",
-        },
-      });
     }
 
     const comment = await prisma.forumComment.create({

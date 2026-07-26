@@ -28,7 +28,7 @@ const FALLBACK_ANSWERS: Record<string, string> = {
   "travel":
     "When traveling, many families carry extra factor, supplies, and documentation from their HTC. Identify nearby HTCs at your destination using the CDC directory. Discuss travel plans with your hematologist before departure, especially for international travel. The CDC has travel safety resources for people with hemophilia.",
   "support":
-    "Support communities include the National Bleeding Disorders Foundation (bleeding.org), local HTC social workers, and peer support groups. HEMOBOT's Community forum also connects patients, parents, and caregivers. These resources provide emotional support but do not replace medical care.",
+    "Support communities include the National Bleeding Disorders Foundation (bleeding.org), local HTC social workers, and peer support groups. HemoBot's community also connects patients, parents, and caregivers. These resources provide emotional support but do not replace medical care.",
   "clinical trials":
     "Clinical trials for hemophilia can be found through ClinicalTrials.gov and the National Bleeding Disorders Foundation. Your Hemophilia Treatment Center can also inform you about trials you may be eligible for. Participation decisions should always be made with your healthcare team.",
 };
@@ -72,7 +72,7 @@ export function getLocalFallbackResponse(message: string): string {
   const answer = findBestFallback(message);
 
   if (answer) {
-    return `${answer}\n\n---\n*This response was generated from HEMOBOT's educational knowledge base. For the most current information, consult your healthcare team or visit our [Learn](/learn) section.*`;
+    return `${answer}\n\n---\n*This response was generated from HemoBot's educational knowledge base. For the most current information, consult your healthcare team or visit our [Learn](/learn) section.*`;
   }
 
   return `Thank you for your question about hemophilia. I'm currently operating in offline mode using our educational knowledge base.
