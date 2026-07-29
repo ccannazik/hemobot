@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { InnovationCard } from "@/components/InnovationCard";
+import { Nxt007ResearchSection } from "@/components/Nxt007ResearchSection";
 import { Disclaimer } from "@/components/Disclaimer";
 import {
   GENETIC_INNOVATIONS,
@@ -30,6 +31,8 @@ export default function InnovationsPage() {
         <p className="font-semibold text-base mb-1">Educational Information Only</p>
         <p>{INNOVATIONS_DISCLAIMER}</p>
       </Disclaimer>
+
+      <Nxt007ResearchSection />
 
       <section className="mt-12" aria-labelledby="genetic-innovations-heading">
         <h2 id="genetic-innovations-heading" className="text-2xl font-bold text-slate-900 mb-6">
