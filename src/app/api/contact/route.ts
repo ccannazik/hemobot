@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendContactEmail, isMailConfigured } from "@/lib/mail";
+import { sendContactEmail } from "@/lib/mail";
 
 export async function POST(request: NextRequest) {
   try {
-    if (!isMailConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "Email is not configured yet. Add GMAIL_USER and GMAIL_APP_PASSWORD to the server environment.",
-        },
-        { status: 503 }
-      );
-    }
-
     const { name, email, subject, message } = await request.json();
 
     if (!name?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
@@ -34,8 +24,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Contact email error:", error);
+    const detail = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to send message. Please try again or email us directly." },
+      {
+        error:
+          "Failed to send message. Please email us directly at hemobot@gmail.com or try again later.",
+        detail: process.env.NODE_ENV === "development" ? detail : undefined,
+      },
       { status: 500 }
     );
   }

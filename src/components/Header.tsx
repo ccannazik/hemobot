@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/learn", label: "Learn" },
   { href: "/treatments", label: "Treatments" },
+  { href: "/innovations", label: "Innovations" },
   { href: "/find-care", label: "Hospital Directory" },
   { href: "/community", label: "Community" },
   { href: "/podcast", label: "Podcast" },

@@ -22,3 +22,18 @@ env:
     secret: DATABASE_URL
     availability:
       - RUNTIME
+
+  - variable: GMAIL_USER
+    secret: GMAIL_USER
+    availability:
+      - RUNTIME
+
+  - variable: GMAIL_APP_PASSWORD
+    secret: GMAIL_APP_PASSWORD
+    availability:
+      - RUNTIME
+
+  - variable: CONTACT_TO
+    secret: CONTACT_TO
+    availability:
+      - RUNTIME

@@ -25,6 +25,7 @@ export function Footer() {
               <li><Link href="/newly-diagnosed" className="hover:text-primary-600">What Should I Do First?</Link></li>
               <li><Link href="/learn" className="hover:text-primary-600">Learn</Link></li>
               <li><Link href="/treatments" className="hover:text-primary-600">Treatments</Link></li>
+              <li><Link href="/innovations" className="hover:text-primary-600">Innovations</Link></li>
               <li><Link href="/find-care" className="hover:text-primary-600">Hospital Directory</Link></li>
               <li><Link href="/assistant" className="hover:text-primary-600">HemoBot AI</Link></li>
             </ul>

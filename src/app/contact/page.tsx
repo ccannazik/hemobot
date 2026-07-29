@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, Clock, Send, Loader2 } from "lucide-react";
+import { Mail, Phone, Clock, Send, Loader2, Instagram } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { EmergencyNotice, PageDisclaimer } from "@/components/Disclaimer";
+import { InstagramPostsSection } from "@/components/InstagramPostsSection";
 import { CONTACT_FAQ, SITE } from "@/data/site";
+import { INSTAGRAM } from "@/data/instagram";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -28,7 +30,8 @@ export default function ContactPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to send message");
+        const detail = data.detail ? ` (${data.detail})` : "";
+        throw new Error((data.error || "Failed to send message") + detail);
       }
 
       setSubmitted(true);
@@ -70,9 +73,25 @@ export default function ContactPage() {
             <p className="text-sm text-slate-500 italic">{SITE.phoneNote}</p>
           </Card>
           <Card>
-            <Clock className="h-5 w-5 text-primary-600 mb-2" />
+            <Clock className="h-5 w-5 text-primary-600 mb-2" aria-hidden="true" />
             <h3 className="font-semibold text-slate-900">Office Hours</h3>
             <p className="text-sm text-slate-600">{SITE.officeHours}</p>
+          </Card>
+          <Card>
+            <Instagram className="h-5 w-5 text-primary-600 mb-2" aria-hidden="true" />
+            <h3 className="font-semibold text-slate-900">Instagram</h3>
+            <a
+              href={INSTAGRAM.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Follow HemoBot on Instagram at ${INSTAGRAM.handle}`}
+              className="text-sm text-primary-600 hover:underline font-medium"
+            >
+              {INSTAGRAM.handle}
+            </a>
+            <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              {INSTAGRAM.description}
+            </p>
           </Card>
         </div>
 
@@ -143,6 +162,8 @@ export default function ContactPage() {
           )}
         </div>
       </div>
+
+      <InstagramPostsSection />
 
       <section className="mt-16">
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Frequently Asked Questions</h2>
