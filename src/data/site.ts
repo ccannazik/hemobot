@@ -36,7 +36,7 @@ export const USER_JOURNEY = [
   {
     step: 4,
     title: "Find a Treatment Center",
-    description: "Locate HTCs and specialized care near you.",
+    description: "Locate Hemophilia Treatment Centers (HTCs) and specialized care near you.",
     href: "/find-care",
   },
   {

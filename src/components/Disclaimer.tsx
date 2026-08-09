@@ -1,21 +1,23 @@
-import { AlertTriangle, Info, ShieldAlert } from "lucide-react";
+import { Info, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MEDICAL_DISCLAIMER_TEXT } from "@/data/site";
 
 interface DisclaimerProps {
-  variant?: "info" | "warning" | "medical" | "prominent";
+  variant?: "info" | "warning" | "medical" | "prominent" | "subtle";
   className?: string;
   children?: React.ReactNode;
 }
 
 export function Disclaimer({ variant = "info", className, children }: DisclaimerProps) {
   const styles = {
-    info: "bg-primary-50 border-primary-300 text-primary-900",
-    warning: "bg-amber-50 border-amber-300 text-amber-900",
-    medical: "bg-red-50 border-red-300 text-red-900",
-    prominent:
-      "bg-amber-50 border-2 border-amber-400 text-slate-800 shadow-sm",
+    info: "bg-primary-50 border-primary-200 text-primary-900",
+    warning: "bg-amber-50 border-amber-200 text-amber-900",
+    medical: "bg-red-50 border-red-200 text-red-900",
+    prominent: "bg-amber-50 border-2 border-amber-400 text-slate-800 shadow-sm",
+    subtle: "bg-slate-50 border-slate-200 text-slate-700",
   };
+
+  const isCompact = variant === "subtle";
 
   const Icon =
     variant === "prominent" || variant === "medical" || variant === "warning"
@@ -27,12 +29,16 @@ export function Disclaimer({ variant = "info", className, children }: Disclaimer
       role="note"
       aria-label="Medical disclaimer"
       className={cn(
-        "flex gap-3 rounded-xl border p-4 sm:p-5 text-sm leading-relaxed",
+        "flex gap-2.5 rounded-lg border leading-relaxed",
+        isCompact ? "p-3 text-xs sm:text-sm" : "rounded-xl p-4 sm:p-5 text-sm",
         styles[variant],
         className
       )}
     >
-      <Icon className="h-6 w-6 shrink-0 mt-0.5" aria-hidden="true" />
+      <Icon
+        className={cn("shrink-0 mt-0.5", isCompact ? "h-4 w-4" : "h-5 w-5 sm:h-6 sm:w-6")}
+        aria-hidden="true"
+      />
       <div>{children}</div>
     </div>
   );
@@ -87,14 +93,11 @@ export function PageDisclaimer() {
 export function EmergencyNotice() {
   return (
     <Disclaimer variant="medical">
-      <div className="flex items-start gap-2">
-        <AlertTriangle className="h-5 w-5 shrink-0" />
-        <p>
-          <strong>Medical emergency?</strong> If you or someone else may be experiencing severe
-          bleeding or another emergency, contact your physician or call <strong>911</strong>{" "}
-          immediately. Do not use this website for emergency decisions.
-        </p>
-      </div>
+      <p>
+        <strong>Medical emergency?</strong> If you or someone else may be experiencing severe
+        bleeding or another emergency, contact your physician or call <strong>911</strong>{" "}
+        immediately. Do not use this website for emergency decisions.
+      </p>
     </Disclaimer>
   );
 }

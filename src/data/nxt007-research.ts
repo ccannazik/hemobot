@@ -8,7 +8,8 @@ export const NXT007_RESEARCH = {
   title: "NXT007: A Next-Generation Factor VIII–Mimetic Bispecific Antibody",
   subtitle: "HemoBot Team Research Project",
   posterPath: "/innovations/NXT007-poster.pdf",
-  posterAlt: "HemoBot team research poster on NXT007 hemophilia innovation",
+  posterAlt:
+    "Research poster titled NXT007: The Future of Hemophilia A Treatment by Ceren Cannazik, Aakash Aggrwal, Matteo Marrufo, Justin Law, and Nil Canozkan, showing introduction, methods, potency results compared with emicizumab, an antibody structure diagram, and conclusions.",
   sections: [
     {
       heading: "Background",

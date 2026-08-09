@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ExternalLink, BookOpen, MessageCircle, MapPin, Headphones } from "lucide-react";
 import { Card } from "@/components/Card";
 import { PageDisclaimer } from "@/components/Disclaimer";
+import { SitePathGuide } from "@/components/SitePathGuide";
+import { PagePathNav } from "@/components/PagePathNav";
 import { articles, knowledgeSources } from "@/data/knowledge";
 
 export const metadata: Metadata = {
@@ -27,6 +29,8 @@ export default function LearnPage() {
       <div className="mt-8">
         <PageDisclaimer />
       </div>
+
+      <SitePathGuide currentHref="/learn" className="mt-8" />
 
       <div className="mt-8 flex flex-wrap gap-3">
         <Link href="/treatments" className="text-sm text-primary-600 hover:underline inline-flex items-center gap-1">
@@ -100,6 +104,8 @@ export default function LearnPage() {
           </Link>
         </div>
       </Card>
+
+      <PagePathNav currentHref="/learn" />
     </div>
   );
 }

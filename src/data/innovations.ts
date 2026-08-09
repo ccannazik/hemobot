@@ -27,7 +27,7 @@ export const INNOVATIONS_DISCLAIMER =
   "This page is for educational purposes only and does not provide medical advice. Some technologies listed below are experimental, preclinical, or in early-stage research and are not currently available as approved treatments. Patients should discuss treatment decisions with a qualified hemophilia specialist.";
 
 export const GENETIC_DISTINCTION_NOTICE =
-  "The first six genetic and gene-based entries include therapies that are approved, clinically tested, or evaluated through long-term human follow-up. Many CRISPR, base-editing, prime-editing, mRNA, and engineered-cell approaches listed afterward remain preclinical or early-stage. They should not be interpreted as treatments that are currently available to patients.";
+  "The approved AAV gene therapies and human clinical studies near the top of this section reflect technologies with substantial clinical data. Many CRISPR, base-editing, prime-editing, mRNA, and engineered-cell approaches listed afterward remain preclinical or early-stage. They should not be interpreted as treatments that are currently available to patients.";
 
 export const INNOVATIONS: Innovation[] = [
   {
@@ -241,5 +241,7 @@ export const INNOVATIONS: Innovation[] = [
   },
 ];
 
-export const GENETIC_INNOVATIONS = INNOVATIONS.filter((i) => i.category === "genetic");
+export const GENETIC_INNOVATIONS = INNOVATIONS.filter(
+  (i) => i.category === "genetic" && !["gen-4", "gen-6", "gen-8"].includes(i.id)
+);
 export const OTHER_INNOVATIONS = INNOVATIONS.filter((i) => i.category === "other");

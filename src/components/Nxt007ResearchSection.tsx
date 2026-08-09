@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ExternalLink, FileText } from "lucide-react";
 import { Card } from "./Card";
 import { Disclaimer } from "./Disclaimer";
+import { InnovationFigure } from "./InnovationFigure";
+import { NXT007_MECHANISM_VISUAL } from "@/data/innovations-article";
 import { NXT007_RESEARCH, NXT007_REFERENCES } from "@/data/nxt007-research";
 
 export function Nxt007ResearchSection() {
@@ -17,8 +19,8 @@ export function Nxt007ResearchSection() {
         <p className="mt-2 text-sm font-medium text-primary-600">{NXT007_RESEARCH.subtitle}</p>
       </div>
 
-      <Disclaimer variant="info" className="mb-6">
-        <p className="font-semibold mb-1">Educational Research Summary</p>
+      <Disclaimer variant="subtle" className="mb-6">
+        <p className="font-medium mb-0.5">Educational research summary</p>
         <p>
           This section summarizes published literature for educational purposes only. It does not
           constitute medical advice. NXT007 remains under clinical investigation and is not an
@@ -35,6 +37,14 @@ export function Nxt007ResearchSection() {
                 {paragraph}
               </p>
             ))}
+            {section.heading === "What Is NXT007?" && (
+              <InnovationFigure
+                src={NXT007_MECHANISM_VISUAL.src}
+                alt={NXT007_MECHANISM_VISUAL.alt}
+                width={NXT007_MECHANISM_VISUAL.width}
+                height={NXT007_MECHANISM_VISUAL.height}
+              />
+            )}
           </div>
         ))}
 
@@ -46,11 +56,20 @@ export function Nxt007ResearchSection() {
       <div className="mt-8">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">HemoBot Team Research Poster</h3>
         <Card className="overflow-hidden !p-0">
-          <iframe
-            src={`${NXT007_RESEARCH.posterPath}#view=FitH`}
-            title={NXT007_RESEARCH.posterAlt}
-            className="w-full h-[600px] sm:h-[800px] border-0 bg-slate-50"
-          />
+          <div className="relative w-full bg-slate-50" style={{ aspectRatio: "8.5 / 11" }}>
+            <object
+              data={`${NXT007_RESEARCH.posterPath}#view=FitH`}
+              type="application/pdf"
+              aria-label={NXT007_RESEARCH.posterAlt}
+              className="absolute inset-0 h-full w-full border-0"
+            >
+              <iframe
+                src={`${NXT007_RESEARCH.posterPath}#view=FitH`}
+                title={NXT007_RESEARCH.posterAlt}
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </object>
+          </div>
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-4 py-3 bg-slate-50">
             <p className="text-xs text-slate-500">HemoBot research poster — NXT007</p>
             <Link
@@ -58,11 +77,11 @@ export function Nxt007ResearchSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open NXT007 research poster PDF in a new tab"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
             >
-              <FileText className="h-4 w-4" aria-hidden="true" />
+              <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
               Open full poster (PDF)
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+              <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </Link>
           </div>
         </Card>

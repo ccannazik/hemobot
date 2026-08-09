@@ -15,6 +15,8 @@ import { Card } from "@/components/Card";
 import { MedicalDisclaimerBanner } from "@/components/Disclaimer";
 import { Chatbot } from "@/components/Chatbot";
 import { LogoMark } from "@/components/Logo";
+import { SitePathGuide } from "@/components/SitePathGuide";
+import { PagePathNav } from "@/components/PagePathNav";
 import { HOMEPAGE_SECTIONS, USER_JOURNEY, SITE } from "@/data/site";
 
 const sectionIcons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -69,6 +71,7 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <MedicalDisclaimerBanner prominent />
+        <SitePathGuide currentHref="/" className="mt-6 max-w-3xl" />
       </div>
 
       <section className="py-16 bg-white border-y border-warm-200">
@@ -175,6 +178,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+        <PagePathNav currentHref="/" />
+      </div>
     </>
   );
 }
