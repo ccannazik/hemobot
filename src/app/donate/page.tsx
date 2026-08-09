@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Heart, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
-import { PageDisclaimer } from "@/components/Disclaimer";
 import { DONATION_TIERS } from "@/data/site";
 
 const IMPACT_ITEMS = [
@@ -43,8 +42,6 @@ export default function DonatePage() {
           processed. This demonstrates how a future donation flow would work.
         </p>
       </div>
-
-      <PageDisclaimer />
 
       <Card className="mt-10">
         <h2 className="font-semibold text-lg text-slate-900">Your gift supports</h2>

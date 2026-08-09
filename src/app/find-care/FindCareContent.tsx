@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Users, MessageCircle } from "lucide-react";
 import { CareMap } from "@/components/CareMap";
 import { LocationSearch } from "@/components/LocationSearch";
-import { PageDisclaimer } from "@/components/Disclaimer";
 import { Card } from "@/components/Card";
 import { PALO_ALTO_CENTER, type FacilityFilter, type HealthcareFacility } from "@/data/facilities";
 
@@ -75,10 +74,6 @@ export default function FindCareContent() {
         <p className="mt-2 text-sm text-slate-500">
           Showing facilities near: <strong>{locationLabel}</strong>
         </p>
-      </div>
-
-      <div className="mt-6">
-        <PageDisclaimer />
       </div>
 
       <div className="mt-8">

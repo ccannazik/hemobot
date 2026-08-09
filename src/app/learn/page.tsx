@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ExternalLink, BookOpen, MessageCircle, MapPin, Headphones } from "lucide-react";
 import { Card } from "@/components/Card";
-import { PageDisclaimer } from "@/components/Disclaimer";
 import { SitePathGuide } from "@/components/SitePathGuide";
 import { PagePathNav } from "@/components/PagePathNav";
 import { articles, knowledgeSources } from "@/data/knowledge";
@@ -24,10 +23,6 @@ export default function LearnPage() {
           Evidence-based articles curated for families who just received a diagnosis. This
           information is for general education only — not personalized medical advice.
         </p>
-      </div>
-
-      <div className="mt-8">
-        <PageDisclaimer />
       </div>
 
       <SitePathGuide currentHref="/learn" className="mt-8" />

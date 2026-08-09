@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Mail, Phone, Clock, Send, Loader2, Instagram } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
-import { EmergencyNotice, PageDisclaimer } from "@/components/Disclaimer";
+import { EmergencyNotice } from "@/components/Disclaimer";
 import { InstagramPostsSection } from "@/components/InstagramPostsSection";
 import { CONTACT_FAQ, SITE } from "@/data/site";
 import { INSTAGRAM } from "@/data/instagram";
@@ -53,10 +53,6 @@ export default function ContactPage() {
       </div>
 
       <EmergencyNotice />
-
-      <div className="mt-8">
-        <PageDisclaimer />
-      </div>
 
       <div className="mt-10 grid lg:grid-cols-3 gap-8">
         <div className="space-y-4">

@@ -11,7 +11,6 @@ import {
   Headphones,
 } from "lucide-react";
 import { Card } from "@/components/Card";
-import { PageDisclaimer } from "@/components/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Newly Diagnosed?",
@@ -97,8 +96,6 @@ export default function NewlyDiagnosedPage() {
           first steps — at your own pace.
         </p>
       </div>
-
-      <PageDisclaimer />
 
       <div className="mt-12 space-y-6">
         {steps.map((step) => (

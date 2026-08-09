@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CommunityGate } from "@/components/CommunityForum";
-import { PageDisclaimer } from "@/components/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -23,9 +22,6 @@ export default function CommunityPage() {
           the{" "}
           <Link href="/assistant" className="text-primary-600 hover:underline">HemoBot AI</Link>.
         </p>
-      </div>
-      <div className="mb-8">
-        <PageDisclaimer />
       </div>
       <CommunityGate />
     </div>

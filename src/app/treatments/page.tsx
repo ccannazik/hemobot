@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, MessageCircle, BookOpen, Users } from "lucide-react";
 import { Card } from "@/components/Card";
-import { PageDisclaimer } from "@/components/Disclaimer";
 import { TREATMENT_SECTIONS } from "@/data/site";
 import { Button } from "@/components/Button";
 
@@ -24,8 +23,6 @@ export default function TreatmentsPage() {
           are not personalized medical advice.
         </p>
       </div>
-
-      <PageDisclaimer />
 
       <div className="mt-10 space-y-6">
         {TREATMENT_SECTIONS.map((section) => (

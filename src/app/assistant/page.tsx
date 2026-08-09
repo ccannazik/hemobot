@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MessageCircle, MapPin, Users, Headphones } from "lucide-react";
 import { Chatbot } from "@/components/Chatbot";
-import { PageDisclaimer } from "@/components/Disclaimer";
 import { Card } from "@/components/Card";
 
 export const metadata: Metadata = {
@@ -23,8 +22,6 @@ export default function AssistantPage() {
           visit next — from treatment guides to the hospital directory and community.
         </p>
       </div>
-
-      <PageDisclaimer />
 
       <div className="mt-6 grid sm:grid-cols-3 gap-3">
         {[

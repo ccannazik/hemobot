@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import { MedicalDisclaimerBanner } from "@/components/Disclaimer";
 import { Chatbot } from "@/components/Chatbot";
 import { LogoMark } from "@/components/Logo";
 import { SitePathGuide } from "@/components/SitePathGuide";
@@ -70,7 +69,6 @@ export default function HomePage() {
       </section>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <MedicalDisclaimerBanner prominent />
         <SitePathGuide currentHref="/" className="mt-6 max-w-3xl" />
       </div>
 
