@@ -91,10 +91,3 @@ export function InnovationArticleGroup({ section }: InnovationArticleGroupProps)
     </section>
   );
 }
-
-export const INNOVATIONS_DELIVERABLE = {
-  name: "Aakash Aggrwal",
-  email: "aakasha@stanford.edu",
-  description:
-    "This innovations page is a HemoBot project deliverable that groups recent hemophilia research by topic and links each entry to its source paper. It is meant to help you compare different approaches in one place instead of searching PubMed one study at a time.",
-};

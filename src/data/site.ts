@@ -86,41 +86,6 @@ export const HOMEPAGE_SECTIONS = [
   },
 ];
 
-export const TREATMENT_SECTIONS = [
-  {
-    title: "Factor Replacement Therapy",
-    summary:
-      "The most common approach supplements missing clotting factor VIII or IX. Specific products and schedules are determined by your hematologist.",
-    source: "National Bleeding Disorders Foundation",
-    learnMore: "/learn",
-    askNavigator: "What is factor replacement therapy?",
-  },
-  {
-    title: "On-Demand vs. Prophylaxis",
-    summary:
-      "On-demand treatment is used when bleeding occurs. Prophylaxis involves scheduled infusions to prevent bleeds. Your care team determines what's appropriate.",
-    source: "CDC — Hemophilia",
-    learnMore: "/learn",
-    askNavigator: "What is the difference between on-demand treatment and prophylaxis?",
-  },
-  {
-    title: "Inhibitors",
-    summary:
-      "Some patients develop antibodies that reduce the effectiveness of factor replacement. HTCs specialize in inhibitor management.",
-    source: "NBDF — Inhibitors",
-    learnMore: "/learn",
-    askNavigator: "What are inhibitors?",
-  },
-  {
-    title: "Newer Treatment Options",
-    summary:
-      "Non-factor therapies, extended half-life products, and gene therapy are areas of active research. Discuss options with your HTC.",
-    source: "Peer-reviewed literature",
-    learnMore: "/treatments",
-    askNavigator: "What newer treatment options exist?",
-  },
-];
-
 export const DONATION_TIERS = [10, 25, 50, 100];
 
 export const CONTACT_FAQ = [
