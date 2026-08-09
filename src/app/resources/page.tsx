@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExternalLink, Building2 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { governmentResources } from "@/data/resources";

@@ -7,7 +7,7 @@ import { Card } from "./Card";
 import { ForumDisclaimer } from "./Disclaimer";
 import { useAuth } from "./AuthProvider";
 import { COMMUNITY_CATEGORIES } from "@/data/site";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Post {
   id: string;
@@ -72,17 +72,17 @@ function CommunityForum() {
   });
   const { user } = useAuth();
 
-  async function loadPosts() {
+  const loadPosts = useCallback(async () => {
     const params = new URLSearchParams();
     if (category !== "all") params.set("category", category);
     if (search) params.set("search", search);
     const res = await fetch(`/api/forum?${params}`);
     setPosts(await res.json());
-  }
+  }, [category, search]);
 
   useEffect(() => {
     loadPosts();
-  }, [category, search]);
+  }, [loadPosts]);
 
   async function createPost(e: React.FormEvent) {
     e.preventDefault();

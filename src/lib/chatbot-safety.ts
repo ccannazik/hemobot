@@ -122,7 +122,7 @@ export function classifyQuestion(message: string): SafetyResult {
   };
 }
 
-export function getLocationResponse(message: string): string {
+export function getLocationResponse(): string {
   return `I can help you find nearby hemophilia care. Use our **Find Care** map to view hospitals, Hemophilia Treatment Centers, and hematology specialists near your location.
 
 For Palo Alto and the surrounding Bay Area, we currently feature verified facilities including Stanford Hemophilia and Thrombosis Center and UCSF Hemophilia Treatment Center.

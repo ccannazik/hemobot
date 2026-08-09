@@ -48,11 +48,8 @@ function pickSources(message: string) {
 }
 
 export async function POST(request: NextRequest) {
-  let userMessage = "";
-
   try {
     const { message, sessionId } = await request.json();
-    userMessage = message;
 
     if (!message || typeof message !== "string") {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -77,7 +74,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (safety.category === "location_resource") {
-      const response = getLocationResponse(message);
+      const response = getLocationResponse();
       await saveConversation(sessionId, message, response, safety.category);
 
       return NextResponse.json({
