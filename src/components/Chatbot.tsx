@@ -21,9 +21,11 @@ interface Message {
 
 interface ChatbotProps {
   compact?: boolean;
+  /** Full assistant page — uses more viewport height, especially on mobile */
+  page?: boolean;
 }
 
-export function Chatbot({ compact = false }: ChatbotProps) {
+export function Chatbot({ compact = false, page = false }: ChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -99,12 +101,24 @@ export function Chatbot({ compact = false }: ChatbotProps) {
     ? quickQuestions.filter((q) => q.category === activeCategory)
     : quickQuestions.slice(0, 6);
 
+  const containerClass = compact
+    ? "h-[500px]"
+    : page
+      ? "flex flex-1 flex-col min-h-[calc(100dvh-11rem)] sm:min-h-[calc(100vh-9rem)] lg:min-h-[720px] h-full w-full"
+      : "flex flex-col min-h-[calc(100dvh-8rem)] sm:min-h-[640px] lg:min-h-[700px] w-full";
+
+  const messagesClass = compact
+    ? "min-h-0"
+    : page
+      ? "min-h-[58vh] sm:min-h-[520px] lg:min-h-[580px]"
+      : "min-h-[50vh] sm:min-h-[480px]";
+
   return (
-    <div className={`flex flex-col ${compact ? "h-[500px]" : "h-[calc(100vh-12rem)] min-h-[600px]"}`}>
+    <div className={`flex flex-col ${containerClass}`}>
       <ChatbotDisclaimer />
 
       {!compact && (
-        <div className="mt-4 space-y-3">
+        <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 shrink-0">
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
@@ -148,7 +162,9 @@ export function Chatbot({ compact = false }: ChatbotProps) {
         </div>
       )}
 
-      <div className="mt-4 flex-1 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 space-y-4">
+      <div
+        className={`mt-3 sm:mt-4 flex-1 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 space-y-4 ${messagesClass}`}
+      >
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -166,7 +182,7 @@ export function Chatbot({ compact = false }: ChatbotProps) {
               )}
             </div>
             <div
-              className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+              className={`max-w-[88%] sm:max-w-[80%] rounded-2xl px-4 py-3 text-sm sm:text-base leading-relaxed ${
                 msg.role === "user"
                   ? "bg-primary-600 text-white"
                   : "bg-slate-50 text-slate-800"
@@ -209,13 +225,13 @@ export function Chatbot({ compact = false }: ChatbotProps) {
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
+      <form onSubmit={handleSubmit} className="mt-3 sm:mt-4 flex gap-2 shrink-0">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask HemoBot AI a general question…"
-          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
           disabled={loading}
           aria-label="Chat message"
         />
